@@ -40,6 +40,9 @@ const MORSE_TABLE = {
 
 function decode(expr) {
   let array = [];
+  let newArray = [];
+  let string = "";
+  let newString = "";
   let result = "";
 
   for (let i = 0; i < expr.length; i = i + 10) {
@@ -47,14 +50,25 @@ function decode(expr) {
   }
 
   for (let i = 0; i < array.length; i++) {
-    array[i] = array[i]
-      .replaceAll("10", ".")
-      .replaceAll("11", "-")
-      .replaceAll("00", "");
+    string = array[i];
+    newString = "";
+    for (let j = 0; j < string.length; j = j + 2) {
+      if (string[j] + string[j + 1] === "10") {
+        newString = newString + ".";
+      }
+      if (string[j] + string[j + 1] === "11") {
+        newString = newString + "-";
+      }
+    }
+    if (string === "**********") {
+      newArray.push(string);
+    } else {
+      newArray.push(newString);
+    }
   }
-
-  for (let i = 0; i < array.length; i++) {
-    result = result + MORSE_TABLE[array[i]];
+  
+  for (let i = 0; i < newArray.length; i++) {
+    result = result + MORSE_TABLE[newArray[i]];
   }
 
   return result;
